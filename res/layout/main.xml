@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/container">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:baselineAligned="false"
+                  android:id="@+id/lists">
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/container1_outer">
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/container1"/>
+            <Button
+                    android:id="@+id/fab"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:text="+"
+                    android:textSize="40sp"
+                    android:background="@drawable/add_button"
+                    android:layout_margin="@dimen/padding_default"
+                    android:elevation="3dp"
+                    android:shadowRadius="1"
+                    android:shadowDy="1"
+                    android:shadowDx="5"
+                    android:paddingBottom="16dp"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="right|bottom"
+                    android:stateListAnimator="@anim/anim"
+                    />
+        </RelativeLayout>
+        <FrameLayout android:layout_width="0dp"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1"
+                     android:id="@+id/container2"/>
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:id="@+id/container_details"/>
+</FrameLayout>
+
