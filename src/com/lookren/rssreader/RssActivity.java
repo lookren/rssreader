@@ -4,6 +4,7 @@ import com.lookren.rssreader.controller.PostAdapter;
 import com.lookren.rssreader.controller.SubscriptionAdapter;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -27,7 +28,6 @@ public class RssActivity extends Activity implements SubscriptionAdapter.Callbac
 
     private long mSelectedSubscriptionId = -1;
     private long mSelectedPostId = -1;
-    private int mPageNum = SUBSCRIPTIONS_PAGE_NUM;
 
     private SubscriptionListFragment mSubscriptionListFragment;
     private PostListFragment mPostListFragment;
@@ -50,6 +50,8 @@ public class RssActivity extends Activity implements SubscriptionAdapter.Callbac
         int pageNum = SUBSCRIPTIONS_PAGE_NUM;
         if (savedInstanceState != null) {
             pageNum = savedInstanceState.getInt(PAGE_NUM_PARAM, SUBSCRIPTIONS_PAGE_NUM);
+            mSelectedSubscriptionId = savedInstanceState.getLong(SELECTED_SUBSCRIPTION_PARAM, mSelectedSubscriptionId);
+            mSelectedPostId = savedInstanceState.getLong(SELECTED_POST_PARAM, mSelectedPostId);
         }
         switch (pageNum) {
             case SUBSCRIPTIONS_PAGE_NUM:
@@ -57,6 +59,9 @@ public class RssActivity extends Activity implements SubscriptionAdapter.Callbac
                 break;
             case POSTS_PAGE_NUM:
                 showPostFragment();
+                break;
+            case DETAILS_PAGE_NUM:
+                showDetailsFragment();
                 break;
             default:
         }
@@ -68,7 +73,8 @@ public class RssActivity extends Activity implements SubscriptionAdapter.Callbac
         outState.putLong(SELECTED_SUBSCRIPTION_PARAM, mSelectedSubscriptionId);
         outState.putLong(SELECTED_POST_PARAM, mSelectedPostId);
         outState.putInt(PAGE_NUM_PARAM,
-                (mContainerLists.getVisibility() == View.VISIBLE ? SUBSCRIPTIONS_PAGE_NUM : POSTS_PAGE_NUM));
+                (mContainerLists.getVisibility() == View.GONE ? DETAILS_PAGE_NUM :
+                mContainerRight.getVisibility() == View.VISIBLE ? POSTS_PAGE_NUM : SUBSCRIPTIONS_PAGE_NUM));
     }
 
     @Override
@@ -80,7 +86,7 @@ public class RssActivity extends Activity implements SubscriptionAdapter.Callbac
         super.onBackPressed();
     }
 
-    private void showSubscriptionFragment() {
+    void showSubscriptionFragment() {
         mContainerDetails.setVisibility(View.GONE);
         mContainerLists.setVisibility(View.VISIBLE);
         final FragmentManager fm = getFragmentManager();
@@ -96,7 +102,7 @@ public class RssActivity extends Activity implements SubscriptionAdapter.Callbac
         mContainerRight.setVisibility(View.GONE);
     }
 
-    private void showPostFragment() {
+    void showPostFragment() {
         mContainerLists.setVisibility(View.VISIBLE);
         mContainerRight.setVisibility(View.VISIBLE);
         mContainerDetails.setVisibility(View.GONE);
@@ -129,6 +135,17 @@ public class RssActivity extends Activity implements SubscriptionAdapter.Callbac
         ft.add(mContainerDetails.getId(), mDetailsFragment, DetailsFragment.class.getSimpleName()).commit();
     }
 
+    private void showAddSubscriptionFragment() {
+        final FragmentManager fm = getFragmentManager();
+        Fragment fragment = fm.findFragmentByTag(AddSubscriptionDialogFragment.class.getSimpleName());
+        if (fragment != null) {
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.remove(fragment);
+        }
+        AddSubscriptionDialogFragment dialog = new AddSubscriptionDialogFragment();
+        dialog.show(fm, AddSubscriptionDialogFragment.class.getSimpleName());
+    }
+
     @Override
     public void setSelectedSubscription(long id) {
         mSelectedSubscriptionId = id;
@@ -152,7 +169,7 @@ public class RssActivity extends Activity implements SubscriptionAdapter.Callbac
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fab) {
-            //todo
+            showAddSubscriptionFragment();
         }
     }
 }

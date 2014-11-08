@@ -33,7 +33,7 @@ public class SubscriptionListFragment extends AbstractListFragment {
 
         @Override
         public void onLoadFinished(Loader<List<Subscription>> loader, List<Subscription> data) {
-            mAdapter = new SubscriptionAdapter(data, getActivity());
+            mAdapter = new SubscriptionAdapter(data, getActivity(), ((RssActivity)getActivity()).getSelectedSubscription());
             mRecyclerView.setAdapter(mAdapter);
             mProgressBar.setVisibility(View.GONE);
             if (mAdapter.getItemCount() > 0) {

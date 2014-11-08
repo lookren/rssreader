@@ -40,12 +40,13 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         }
     }
 
-    public SubscriptionAdapter(List<Subscription> items, Context context) {
+    public SubscriptionAdapter(List<Subscription> items, Context context, long selectedId) {
         mItems = items;
         mContext = context;
         if (context instanceof Callback) {
             mCallback = (Callback) context;
         }
+        mSelectedId = selectedId;
     }
 
     @Override
@@ -67,7 +68,7 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
             }
         });
         holder.mText.setText(mItems.get(position).getName());
-        if (mSelectedId == position) {
+        if (mSelectedId == mItems.get(position).getId()) {
             holder.mText.setTypeface(null, Typeface.BOLD);
         } else {
             holder.mText.setTypeface(null, Typeface.NORMAL);

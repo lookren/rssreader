@@ -200,4 +200,10 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.remove(Post._ID);
         return getDatabase().insert(Columns.PostColumns.TABLE_NAME, null, contentValues);
     }
+
+    public long saveSubscription(Subscription subscription) {
+        ContentValues contentValues = subscription.toContentValues();
+        contentValues.remove(Subscription._ID);
+        return getDatabase().insert(Columns.SubscriptionColumns.TABLE_NAME, null, contentValues);
+    }
 }

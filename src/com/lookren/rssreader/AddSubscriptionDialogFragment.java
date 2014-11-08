@@ -20,10 +20,11 @@ public class AddSubscriptionDialogFragment extends DialogFragment implements Vie
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.add_subscription_dialog, null);
-        mHeader = (TextView) root.findViewById(R.id.header);
+        mHeader = (TextView) root.findViewById(R.id.display_name);
         mUrl = (TextView) root.findViewById(R.id.link);
 
         root.findViewById(R.id.save).setOnClickListener(this);
+
         return root;
     }
 
