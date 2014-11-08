@@ -60,10 +60,10 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         holder.mContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSelectedId = position;
+                mSelectedId = mItems.get(position).getId();
                 notifyDataSetChanged();
                 if (mCallback != null) {
-                    mCallback.setSelectedSubscription(mItems.get(position).getId());
+                    mCallback.setSelectedSubscription(mSelectedId);
                 }
             }
         });
