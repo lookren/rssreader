@@ -3,4 +3,7 @@
     <string name="app_name">RSS Reader</string>
     <string name="list_is_empty">No data</string>
     <string name="header">Header</string>
+    <string name="enter_name">Enter name:</string>
+    <string name="enter_url">Enter url:</string>
+    <string name="save_label">Save</string>
 </resources>
