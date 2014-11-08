@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+    <EditText android:layout_width="match_parent"
+              android:layout_height="@dimen/item_height"
+              android:id="@+id/display_name"
+              android:hint="@string/enter_name"
+              android:padding="@dimen/padding_default"/>
+    <EditText android:layout_width="match_parent"
+              android:layout_height="@dimen/item_height"
+              android:id="@+id/link"
+              android:hint="@string/enter_url"
+              android:padding="@dimen/padding_default"/>
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/save"
+            android:text="@string/save_label"/>
+</LinearLayout>
