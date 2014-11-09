@@ -33,21 +33,22 @@ public class SubscriptionListFragment extends AbstractListFragment {
 
         @Override
         public void onLoadFinished(Loader<List<Subscription>> loader, List<Subscription> data) {
-            mAdapter = new SubscriptionAdapter(data, getActivity(), ((RssActivity)getActivity()).getSelectedSubscription());
+            mAdapter = new SubscriptionAdapter(data, getActivity(), mUIListener != null ?
+                    mUIListener.getSelectedSubscription() : -1);
             mRecyclerView.setAdapter(mAdapter);
             mProgressBar.setVisibility(View.GONE);
             if (mAdapter.getItemCount() > 0) {
-                mTextView.setVisibility(View.GONE);
+                mEmptyTextView.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
             } else {
-                mTextView.setVisibility(View.VISIBLE);
+                mEmptyTextView.setVisibility(View.VISIBLE);
                 mRecyclerView.setVisibility(View.GONE);
             }
         }
 
         @Override
         public void onLoaderReset(Loader<List<Subscription>> loader) {
-            mTextView.setVisibility(View.VISIBLE);
+            mEmptyTextView.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.GONE);
         }

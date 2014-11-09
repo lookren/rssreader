@@ -19,8 +19,8 @@ public class PostListFragment extends AbstractListFragment {
         final LoaderManager lm = getLoaderManager();
         lm.initLoader(1, null, new PostLoaderCallback());
 
-        if (mTextView != null) {
-            mTextView.setVisibility(View.GONE);
+        if (mEmptyTextView != null) {
+            mEmptyTextView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }
@@ -30,8 +30,8 @@ public class PostListFragment extends AbstractListFragment {
         final LoaderManager lm = getLoaderManager();
         lm.restartLoader(1, null, new PostLoaderCallback());
 
-        if (mTextView != null) {
-            mTextView.setVisibility(View.GONE);
+        if (mEmptyTextView != null) {
+            mEmptyTextView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         }
@@ -41,7 +41,7 @@ public class PostListFragment extends AbstractListFragment {
 
         @Override
         public Loader<List<Post>> onCreateLoader(int id, Bundle args) {
-            return new PostLoader(getActivity(), ((RssActivity)getActivity()).getSelectedSubscription());
+            return new PostLoader(getActivity(), mUIListener != null ? mUIListener.getSelectedSubscription() : -1);
         }
 
         @Override
@@ -50,17 +50,17 @@ public class PostListFragment extends AbstractListFragment {
             mRecyclerView.setAdapter(mAdapter);
             mProgressBar.setVisibility(View.GONE);
             if (mAdapter.getItemCount() > 0) {
-                mTextView.setVisibility(View.GONE);
+                mEmptyTextView.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
             } else {
-                mTextView.setVisibility(View.VISIBLE);
+                mEmptyTextView.setVisibility(View.VISIBLE);
                 mRecyclerView.setVisibility(View.GONE);
             }
         }
 
         @Override
         public void onLoaderReset(Loader<List<Post>> loader) {
-            mTextView.setVisibility(View.VISIBLE);
+            mEmptyTextView.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.GONE);
         }

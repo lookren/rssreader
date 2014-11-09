@@ -3,6 +3,7 @@ package com.lookren.rssreader;
 import com.lookren.rssreader.controller.PostDetailsLoader;
 import com.lookren.rssreader.model.Post;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Loader;
@@ -18,8 +19,10 @@ public class DetailsFragment extends Fragment {
     private TextView mHeader;
     private TextView mDescription;
 
-    protected ProgressBar mProgressBar;
-    protected TextView mTextView;
+    private ProgressBar mProgressBar;
+    private TextView mEmptyText;
+
+    private UIListener mUIListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,12 +32,12 @@ public class DetailsFragment extends Fragment {
         mHeader = (TextView) root.findViewById(R.id.header);
         mDescription = (TextView) root.findViewById(R.id.description);
         mProgressBar = (ProgressBar) root.findViewById(R.id.progress);
-        mTextView = (TextView) root.findViewById(R.id.empty_text);
+        mEmptyText = (TextView) root.findViewById(R.id.empty_text);
 
         mHeader.setVisibility(View.GONE);
         mDescription.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
-        mTextView.setVisibility(View.GONE);
+        mEmptyText.setVisibility(View.GONE);
         return root;
     }
 
@@ -42,6 +45,20 @@ public class DetailsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         startLoading();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof UIListener) {
+            mUIListener = (UIListener) activity;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mUIListener = null;
     }
 
     private void startLoading() {
@@ -58,7 +75,7 @@ public class DetailsFragment extends Fragment {
 
         @Override
         public Loader<Post> onCreateLoader(int id, Bundle args) {
-            return new PostDetailsLoader(getActivity(), ((RssActivity)getActivity()).getSelectedPost());
+            return new PostDetailsLoader(getActivity(), mUIListener != null ? mUIListener.getSelectedPost() : -1);
         }
 
         @Override
@@ -68,7 +85,7 @@ public class DetailsFragment extends Fragment {
                 return;
             }
 
-            mTextView.setVisibility(View.GONE);
+            mEmptyText.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.GONE);
 
             mHeader.setVisibility(View.VISIBLE);
@@ -79,7 +96,7 @@ public class DetailsFragment extends Fragment {
 
         @Override
         public void onLoaderReset(Loader<Post> loader) {
-            mTextView.setVisibility(View.VISIBLE);
+            mEmptyText.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
         }
     }

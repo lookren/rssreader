@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class RssActivity extends Activity implements SubscriptionAdapter.Callback, PostAdapter.Callback,
-        View.OnClickListener {
+        View.OnClickListener, UIListener {
 
     private static final String PAGE_NUM_PARAM = "param_page_num";
     private static final String SELECTED_SUBSCRIPTION_PARAM = "param_selected_subscription";
