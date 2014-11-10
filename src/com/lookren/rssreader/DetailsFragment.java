@@ -22,7 +22,7 @@ public class DetailsFragment extends Fragment {
     private ProgressBar mProgressBar;
     private TextView mEmptyText;
 
-    private UIListener mUIListener;
+    private UICallback mUIListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,8 +50,8 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof UIListener) {
-            mUIListener = (UIListener) activity;
+        if (activity instanceof UICallback) {
+            mUIListener = (UICallback) activity;
         }
     }
 

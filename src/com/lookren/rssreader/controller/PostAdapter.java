@@ -1,6 +1,7 @@
 package com.lookren.rssreader.controller;
 
 import com.lookren.rssreader.R;
+import com.lookren.rssreader.UICallback;
 import com.lookren.rssreader.model.Post;
 
 import android.content.Context;
@@ -19,16 +20,11 @@ import java.util.List;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private Context mContext;
-    private Callback mCallback;
+    private UICallback mCallback;
 
     private List<Post> mItems;
     private long mSelectedId = -1;
     private int mLastPosition = -1;
-
-    public interface Callback {
-        void setSelectedPost(long id);
-        long getSelectedSubscription();
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView mText;
@@ -41,15 +37,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
     }
 
-    public Callback getCallback() {
+    public UICallback getCallback() {
         return mCallback;
     }
 
     public PostAdapter(List<Post> items, Context context) {
         mItems = items;
         mContext = context;
-        if (context instanceof Callback) {
-            mCallback = (Callback) context;
+        if (context instanceof UICallback) {
+            mCallback = (UICallback) context;
         }
     }
 

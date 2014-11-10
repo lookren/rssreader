@@ -16,7 +16,7 @@ public abstract class AbstractListFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected ProgressBar mProgressBar;
     protected TextView mEmptyTextView;
-    protected UIListener mUIListener;
+    protected UICallback mUIListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,8 +44,8 @@ public abstract class AbstractListFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof UIListener) {
-            mUIListener = (UIListener) activity;
+        if (activity instanceof UICallback) {
+            mUIListener = (UICallback) activity;
         }
     }
 
