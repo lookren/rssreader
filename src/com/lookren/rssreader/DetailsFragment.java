@@ -7,10 +7,15 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Loader;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,6 +26,7 @@ public class DetailsFragment extends Fragment {
 
     private ProgressBar mProgressBar;
     private TextView mEmptyText;
+    private WebView mWebView;
 
     private UICallback mUIListener;
 
@@ -33,6 +39,7 @@ public class DetailsFragment extends Fragment {
         mDescription = (TextView) root.findViewById(R.id.description);
         mProgressBar = (ProgressBar) root.findViewById(R.id.progress);
         mEmptyText = (TextView) root.findViewById(R.id.empty_text);
+        mWebView = (WebView) root.findViewById(R.id.web_view);
 
         mHeader.setVisibility(View.GONE);
         mDescription.setVisibility(View.GONE);
@@ -62,6 +69,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private void startLoading() {
+        mWebView.setVisibility(View.GONE);
         final LoaderManager lm = getLoaderManager();
         lm.initLoader(1, null, new PostDetailsLoaderCallback());
     }
@@ -91,13 +99,31 @@ public class DetailsFragment extends Fragment {
             mHeader.setVisibility(View.VISIBLE);
             mDescription.setVisibility(View.VISIBLE);
             mHeader.setText(data.getName());
-            mDescription.setText(data.getDescription());
+            mDescription.setText(Html.fromHtml(data.getDescription()));
+            mDescription.setMovementMethod(LinkMovementMethod.getInstance());
+            mWebView.setVisibility(View.GONE);
+            mWebView.loadUrl(data.getLink());
+            mWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                    super.onPageStarted(view, url, favicon);
+                    mProgressBar.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    mWebView.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.GONE);
+                }
+            });
         }
 
         @Override
         public void onLoaderReset(Loader<Post> loader) {
             mEmptyText.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
+            mWebView.setVisibility(View.GONE);
         }
     }
 }

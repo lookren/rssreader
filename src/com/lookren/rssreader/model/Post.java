@@ -32,6 +32,10 @@ public class Post implements RssContent, Columns.PostColumns {
         return mName;
     }
 
+    public String getLink() {
+        return mLink;
+    }
+
     public String getDescription() {
         return mDescription;
     }
@@ -42,6 +46,7 @@ public class Post implements RssContent, Columns.PostColumns {
         contentValues.put(DISPLAY_NAME, mName);
         contentValues.put(SUBSCRIPTION, mSubscriptionId);
         contentValues.put(DESCRIPTION, mDescription);
+        contentValues.put(LINK, mLink);
         return contentValues;
     }
 }

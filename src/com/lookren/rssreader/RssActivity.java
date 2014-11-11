@@ -1,8 +1,5 @@
 package com.lookren.rssreader;
 
-import com.lookren.rssreader.controller.PostAdapter;
-import com.lookren.rssreader.controller.SubscriptionAdapter;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,8 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class RssActivity extends Activity implements SubscriptionAdapter.Callback, PostAdapter.Callback,
-        View.OnClickListener, UICallback {
+public class RssActivity extends Activity implements View.OnClickListener, UICallback {
 
     private static final String PAGE_NUM_PARAM = "param_page_num";
     private static final String SELECTED_SUBSCRIPTION_PARAM = "param_selected_subscription";
